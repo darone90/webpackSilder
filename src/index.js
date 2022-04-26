@@ -17,7 +17,7 @@ const handle = document.querySelector('.slider__divider-handle');
 
 let containerWidth;
 let dragging = false;
-const leftDistance = imagesContainer.offsetLeft;
+let leftDistance;
 
 const getOffset = (left) => {
     const offset = left - leftDistance;
@@ -43,9 +43,23 @@ const initEvent = () => {
         dragging = false;
     });
 
+    handle.addEventListener('touchstart', () => {
+        dragging = true;
+    });
+
+    handle.addEventListener('touchend', () => {
+        dragging = false;
+    });
+
     window.addEventListener('mousemove', (e) => {
         if(dragging) {
             move(e.clientX);
+        }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+        if(dragging) {
+            move(e.touches[0].clientX);
         }
     })
 }
@@ -53,6 +67,7 @@ const resizeFunc = () => {
     containerWidth = imagesContainer.offsetWidth;
     imgE1.style.width = containerWidth + 'px';
     imgE2.style.width = containerWidth + 'px';
+    leftDistance = imagesContainer.offsetLeft;
 };
 
 
