@@ -8,21 +8,54 @@ addingFoto('slider__image-container--first', foto1, 'obrazek pierwszy');
 addingFoto('slider__image-container--second', foto2, 'obrazek drugi');
 
 const imagesContainer = document.querySelector('.slider__images-container');
-
 const imgE1 = document.querySelector('.slider__image-container--first img');
-
 const imgE2 = document.querySelector('.slider__image-container--second img');
+const imgE1Container = document.querySelector('.slider__image-container--first');
+const imgE2Container = document.querySelector('.slider__image-container--second');
+const divider = document.querySelector('.silder__divider');
+const handle = document.querySelector('.slider__divider-handle');
 
-const dragging = false;
+let containerWidth;
+let dragging = false;
+const leftDistance = imagesContainer.offsetLeft;
 
+const getOffset = (left) => {
+    const offset = left - leftDistance;
+    if(offset < 0) {
+        return 0
+    } else if (offset > containerWidth) {
+        return containerWidth;
+    } else return offset;
+}
 
+const move = (left) => {
+    const offset = getOffset(left);
+    const percent = (offset / containerWidth * 100);
+    divider.style.left = percent + '%';
+    imgE2Container.style.width = percent + '%';
+}
+const initEvent = () => {
+    handle.addEventListener('mousedown', () => {
+        dragging = true;
+    });
+
+    handle.addEventListener('mouseup', () => {
+        dragging = false;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if(dragging) {
+            move(e.clientX);
+        }
+    })
+}
 const resizeFunc = () => {
-    const containerWidth = imagesContainer.offsetWidth;
+    containerWidth = imagesContainer.offsetWidth;
     imgE1.style.width = containerWidth + 'px';
     imgE2.style.width = containerWidth + 'px';
 };
-resizeFunc()
-
 
 
 window.addEventListener('resize', resizeFunc)
+resizeFunc();
+initEvent();
