@@ -1,0 +1,24 @@
+.silder__divider {
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider__divider-handle {
+    border-radius: 50%;
+    flex: 0 0 auto;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(256, 256, 256, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+}
